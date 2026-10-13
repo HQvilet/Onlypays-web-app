@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { QueryProvider } from "@/components/providers/query-provider";
+import { AuthProvider } from "@/components/providers/auth-provider";
+import { HeaderNav } from "@/components/layout/header-nav";
+import { ToastContainer } from "@/components/ui/toast-container";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -13,8 +17,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Next.js App",
-  description: "Next.js frontend application",
+  title: "OnlyPays | Exclusive Content & Opux Economy",
+  description: "Social media platform for content creators with Opux (Opx) token subscriptions and Auth0 PKCE authentication.",
 };
 
 export default function RootLayout({
@@ -24,7 +28,20 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
-      <body>{children}</body>
+      <body className="bg-slate-50 text-slate-900 antialiased min-h-screen flex flex-col">
+        <QueryProvider>
+          <AuthProvider>
+            <HeaderNav />
+            <main className="flex-1 flex flex-col">{children}</main>
+            <ToastContainer />
+            <footer className="bg-white border-t border-slate-200 py-6 mt-auto">
+              <div className="max-w-7xl mx-auto px-4 text-center text-xs text-slate-500">
+                OnlyPays &copy; 2026. Microservices & Opux Token Platform.
+              </div>
+            </footer>
+          </AuthProvider>
+        </QueryProvider>
+      </body>
     </html>
   );
 }
