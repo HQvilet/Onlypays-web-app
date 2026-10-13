@@ -1,0 +1,21 @@
+services:
+  onlypays-web-app:
+    build:
+      context: .
+      target: deps
+    working_dir: /app
+    image: onlypays-web-app
+    command: npm run dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env
+    environment:
+      NODE_ENV: development
+      CHOKIDAR_USEPOLLING: "true"
+      WATCHPACK_POLLING: "true"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    restart: unless-stopped
